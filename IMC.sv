@@ -71,3 +71,38 @@ module array_multiplier_4x4 (
     assign temp3 = {1'b0, partial_products[3], 3'b000};       // Shift partial product 3
     assign Product = sum3 + temp3;
 endmodule
+
+// 5. improved version of 4x4 Array Multiplier
+module array_multiplier_4x4 (
+    input  logic [3:0] A, B,    // 4-bit inputs A and B
+    output logic [7:0] Product  // 8-bit product output
+);
+    logic [3:0] partial_products [3:0]; // Partial products
+    logic [7:0] sum [2:0];              
+    logic [7:0] temp [2:0];             
+
+    // Generate partial products
+    genvar i, j;
+    generate
+        for (i = 0; i < 4; i++) begin : gen_partial_products
+            for (j = 0; j < 4; j++) begin : gen_and_gates
+                assign partial_products[i][j] = A[j] & B[i];
+            end
+        end
+    endgenerate
+
+    // Sum of partial products
+    generate
+        for (i = 0; i < 3; i++) begin : gen_summation
+            assign temp[i] = {partial_products[i+1], i+1'b0}; //  Shift partial product
+            if (i == 0) begin
+                assign sum[i] = {4'b0000, partial_products[0]} + temp[i];
+            end else begin
+                assign sum[i] = sum[i-1] + temp[i];
+            end
+        end
+    endgenerate
+
+    // Final product
+    assign Product = sum[2] + {partial_products[3], 3'b000};
+endmodule
