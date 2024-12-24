@@ -1,15 +1,17 @@
-module ripple_carry_adder_4bit (
-    input  logic [3:0] A,    // 4-bit input A
-    input  logic [3:0] B,    // 4-bit input B
-    input  logic        Cin,  // Initial carry-in
-    output logic [3:0] Sum,  // 4-bit sum output
-    output logic        Cout  // Final carry-out
+module ripple_carry_adder #(
+    parameter WIDTH = 4 // Parameter to set the width of the adder
+)(
+    input  logic [WIDTH-1:0] A,    // N-bit input A
+    input  logic [WIDTH-1:0] B,    // N-bit input B
+    input  logic             Cin,  // Initial carry-in
+    output logic [WIDTH-1:0] Sum,  // N-bit sum output
+    output logic             Cout  // Final carry-out
 );
-    logic [3:0] carry;  // Internal carry signals
+    logic [WIDTH-1:0] carry;  // Internal carry signals
 
     genvar i;
     generate
-        for (i = 0; i < 4; i = i + 1) begin : adder_gen
+        for (i = 0; i < WIDTH; i = i + 1) begin : adder_gen
             if (i == 0) begin
                 // First full adder
                 full_adder FA (
@@ -19,7 +21,7 @@ module ripple_carry_adder_4bit (
                     .sum(Sum[i]),
                     .cout(carry[i])
                 );
-            end else if (i == 3) begin
+            end else if (i == WIDTH-1) begin
                 // Last full adder
                 full_adder FA (
                     .a(A[i]),
