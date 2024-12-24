@@ -65,4 +65,9 @@ module array_multiplier_4x4 (
     assign temp1 = {3'b000, partial_products[1], 1'b0};       // Shift partial product 1
     assign sum2 = sum1 + temp1;
 
-    assign temp2 = {2'b00, partial_products[2], 2'b00}; 
+    assign temp2 = {2'b00, partial_products[2], 2'b00};       // Shift partial product 2
+    ssign sum3 = sum2 + temp2;
+
+    assign temp3 = {1'b0, partial_products[3], 3'b000};       // Shift partial product 3
+    assign Product = sum3 + temp3;
+endmodule
