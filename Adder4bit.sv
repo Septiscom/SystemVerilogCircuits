@@ -43,3 +43,4 @@ module ripple_carry_adder #(
         end
     endgenerate
 endmodule
+//sometext

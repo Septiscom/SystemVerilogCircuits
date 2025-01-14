@@ -38,3 +38,4 @@ module sequence_detector (
         detected = (current_state == S4);
     end
 endmodule
+//sometext
