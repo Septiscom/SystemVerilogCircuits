@@ -106,3 +106,4 @@ module array_multiplier_4x4 (
     // Final product
     assign Product = sum[2] + {partial_products[3], 3'b000};
 endmodule
+//sometext
